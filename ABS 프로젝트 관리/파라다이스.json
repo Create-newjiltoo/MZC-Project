@@ -1,0 +1,58 @@
+{
+  "project": "파라다이스",
+  "saved": "2026-06-22T07:40:44.159Z",
+  "rows": [
+    {
+      "id": "mqoqjptg2sc56",
+      "date": "2026-06-12",
+      "check": "완료",
+      "requester": "jung.jy@mz.co.kr",
+      "assignee": "강영선, 설용환",
+      "kind": "미팅",
+      "content": "파라다이스그룹 문서 중앙화 시스템 노후화 및 M365 라이선스 활용도 저조 문제 공론화.",
+      "next": "현황 진단 기반 플랫폼 전략 로드맵 초안 작성",
+      "note": "",
+      "ref": "",
+      "atts": []
+    },
+    {
+      "id": "mqoqjptg3a4pd",
+      "date": "2026-06-17",
+      "check": "체크",
+      "requester": "Youngjoo Koh (DENAVE INDIA)",
+      "assignee": "jung.jy@mz.co.kr; yhseol@megazone.com",
+      "kind": "온라인",
+      "content": "1. 미팅내용 공유\n2. 방향 안내\n3. 담당자 선정\n4. 일정 추후 협의",
+      "next": "",
+      "note": "",
+      "ref": "https://teams.microsoft.com/meet/21486391133477",
+      "atts": []
+    },
+    {
+      "id": "mqoqjptg653ez",
+      "date": "2026-06-18",
+      "check": "체크",
+      "requester": "강영선",
+      "assignee": "설용환",
+      "kind": "팀즈",
+      "content": "파라다이스 M365 전사 확산 컨설팅 진행 예정. 설용환 (ABS Technical Consulting 매니저) 참고 요청.",
+      "next": "",
+      "note": "",
+      "ref": "",
+      "atts": []
+    },
+    {
+      "id": "mqowosgp0mq8d",
+      "date": "2026-06-22",
+      "check": "완료",
+      "requester": "최혜연 <hyeyoni@paradian.com>",
+      "assignee": "\"'mzkey'\" <mzkey@megazone.com>; \"yhseol@megazone.com\" <yhseol@megazone.com>; \"'Jinha Seo'\" <jinhaseo@microsoft.com>; \"'Ian Han'\" <hanian@microsoft.com>;\"jung.jy@mz.co.kr\" <jung.jy@mz.co.kr>",
+      "kind": "메일",
+      "note": "",
+      "content": "M365 보안 관련 문의는 이상호 매니저님, 강상훈 매니저님께 주시면 됩니다.\n\n이상호 매니저 inusia@paradian.com\n강상훈 매니저 invenire@paradian.com",
+      "next": "",
+      "ref": "",
+      "atts": []
+    }
+  ]
+}

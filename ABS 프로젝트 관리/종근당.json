@@ -1,0 +1,71 @@
+{
+  "project": "종근당",
+  "saved": "2026-06-22T07:40:45.192Z",
+  "rows": [
+    {
+      "id": "mqoqjptg04718",
+      "date": "2026-06-04",
+      "check": "완료",
+      "requester": "강영선",
+      "assignee": "설용환",
+      "kind": "전화",
+      "content": "종근당 건강 산출물 자료 작성 요청",
+      "next": "",
+      "note": "",
+      "ref": "",
+      "atts": []
+    },
+    {
+      "id": "mqoqjptgytt66",
+      "date": "2026-06-11",
+      "check": "완료",
+      "requester": "설용환",
+      "assignee": "양철진",
+      "kind": "팀즈",
+      "content": "1차 검수 요청",
+      "next": "",
+      "note": "",
+      "ref": "",
+      "atts": []
+    },
+    {
+      "id": "mqoqjptgjn30n",
+      "date": "2026-06-17",
+      "check": "완료",
+      "requester": "설용환",
+      "assignee": "양철진",
+      "kind": "팀즈",
+      "note": "",
+      "content": "검수 요청 확인 (2차)",
+      "next": "",
+      "ref": "https://megazone0.sharepoint.com/:f:/r/sites/ModernWorkplace603/Shared%20Documents/General/02.%EA%B3%A0%EA%B0%9D%EC%82%AC/%EC%A2%85%EA%B7%BC%EB%8B%B9%EA%B1%B4%EA%B0%95/11.%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%A7%84%ED%96%89%EA%B4%80%EB%A0%A8/04.%EA%B2%80%EC%88%98%EC%9E%90%EB%A3%8C?csf=1&web=1&e=HAWEIW",
+      "atts": []
+    },
+    {
+      "id": "mqoqjptgotmby",
+      "date": "2026-06-18",
+      "check": "완료",
+      "requester": "설용환",
+      "assignee": "양철진",
+      "kind": "전화",
+      "content": "프로젝트 최종 보고 관련 미팅 요청 취소 안내",
+      "next": "",
+      "note": "",
+      "ref": "",
+      "atts": []
+    },
+    {
+      "id": "mqos6tnszvjvj",
+      "date": "2026-06-22",
+      "check": "체크",
+      "requester": "양철진",
+      "assignee": "설용환",
+      "kind": "전화",
+      "note": "",
+      "content": "1. 최신 정책 결과 엑셀 확인\n\n📁 위치\n\n\"디플로\" 공용 폴더\n어제 날짜로 업데이트된 정책 결과 엑셀\n\n확인 내용\n\n정책별 결과\n차단된 사례\n사용자에게 실제로 보이는 화면\n\n목적\n\n종료보고서에 들어갈 핵심 내용 선별\n2. 종료보고서 PPT 대폭 축소\n\n상대방 요청사항\n\n총 15페이지 이내\n표지 포함\n내용 너무 많지 않게\n\n현재 PPT에서\n\n❌ 정책 설명 위주\n\n보다는\n\n⭕ 사용자 영향 위주\n\n로 수정\n\n예시\n\n접속 허용 화면\n차단 화면\n경고 메시지\n정책 적용 결과\n3. 스크린샷 정리\n\n중요한 포인트\n\n정책 설정 화면을 찍는 게 아니라\n\n정책 적용 결과 화면\n\n을 넣어야 함\n\n예시\n\n웹사이트 접속 차단 화면\n파일 다운로드 차단 화면\n경고 팝업\n사용자 알림 화면\n\n사용할 자료\n\n본인이 기존에 캡처한 자료\n상대방이 결과보고서에 넣어둔 숨김 슬라이드 3~4장\n\n→ 둘을 합쳐서 사용\n\n4. 상대방이 보내줄 PPT 받기\n\n현재 문제\n\n상대방이 수정한 결과보고서 PPT가 공유폴더에 없음\n원드라이브에만 있는 것으로 추정\n\n해야 할 일\n\nPPT 전달받기\n숨김 슬라이드 확인\n수정사항 반영\n5. 향후 고도화(추가 사업 제안) 페이지 추가\n\n종료보고서 마지막 1~2장\n\n내용\n\n\"이번 구축 범위에 포함되지 않은 영역\"\n\n예시\n\n문서보안(MIP) 고도화\n\n현재 상태\n\nInternal : 암호화 없음\nGeneral : 암호화 없음\nConfidential : 사용자 지정만 존재\n기본 보호 레이블 없음\n\n향후 제안\n\nMIP 자동 분류\n암호화 적용\n문서 외부 공유 통제\n민감정보 보호 강화\n\n=> 이 내용으로 1장 정도 추가",
+      "next": "1. 결과 확인 후 핵심 캡처 선정\n2. 숨김 슬라이드 확인\n3. 사용 가능 여부 검토\n4. 필요한 화면 재활용\n",
+      "ref": "",
+      "atts": []
+    }
+  ]
+}
