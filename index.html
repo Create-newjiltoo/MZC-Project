@@ -151,76 +151,46 @@ tr.hl td{animation:hl 2.5s ease-out forwards}
 .tst.ok{border-color:rgba(61,224,160,.35);color:var(--ok)}.tst.err{border-color:rgba(255,77,109,.35);color:var(--dan)}
 @keyframes tsin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .empty{text-align:center;padding:44px 16px;color:var(--tx3)}.empty-ic{font-size:30px;margin-bottom:8px}
-/* ══════════════════════════════════════════════
-   MOBILE RESPONSIVE (≤640px)
-══════════════════════════════════════════════ */
 @media(max-width:640px){
   .main{padding:8px}
   .fg2{grid-template-columns:1fr}
   .cfg-grid{grid-template-columns:1fr}
-
-  /* 헤더 */
   .hdr{padding:0 10px;height:48px;gap:6px}
   .hdr-sub{display:none}
   .hdr-title{font-size:12px}
   .hdr-act{gap:3px}
   .hdr-act .btn{padding:4px 7px;font-size:10px}
-
-  /* 탭바 */
   .tabbar{top:48px;padding:0 6px}
   .tab{padding:7px 9px;font-size:11px}
-
-  /* 통계 카드 */
   .stats{grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:10px}
   .sc{padding:10px 12px}
   .sc-val{font-size:22px}
-
-  /* 날짜 필터 */
   .dfbar{padding:6px 9px;gap:5px}
   .dfb{padding:3px 7px;font-size:10px}
-
-  /* 툴바 */
   .toolbar{gap:5px}
   .srch{min-width:0;flex:1}
   .fsel{font-size:10px;padding:4px 6px}
-
-  /* 테이블 — 가로 스크롤 */
   .twrap{border-radius:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{min-width:600px}
+  table{min-width:700px}
   th{padding:6px 8px;font-size:9px}
   td{padding:6px 8px;font-size:11px}
-
-  /* 프로젝트 헤더 */
   .phdr{gap:5px;margin-bottom:10px}
   .phdr h2{font-size:13px}
-
-  /* 모달 */
   .modal{padding:14px;border-radius:10px;max-height:96vh}
   .modal h2{font-size:13px;margin-bottom:12px}
   .mact{gap:5px;flex-wrap:wrap}
   .mact .btn{flex:1;justify-content:center;min-width:0}
-
-  /* 폼 입력 — 16px: iOS 자동 줌 방지 */
   .fg input,.fg select,.fg textarea{font-size:16px;padding:9px 11px}
   .fg textarea{min-height:90px}
-
-  /* 첨부 영역 */
   .att-area{padding:16px 10px}
-
-  /* 토스트 */
   .tw{bottom:12px;right:10px;left:10px}
   .tst{max-width:100%}
-
-  /* 설정 카드 */
   .cfg-card{padding:14px}
   .step{padding:10px 11px;gap:8px}
 }
-
-/* 초소형 화면 (≤380px) */
 @media(max-width:380px){
   .hdr-title{font-size:11px}
   .hdr-act .btn span{display:none}
-  .stats{grid-template-columns:repeat(2,1fr)}
   .sc-val{font-size:20px}
   .tab{padding:6px 7px;font-size:10px}
 }
@@ -245,7 +215,15 @@ tr.hl td{animation:hl 2.5s ease-out forwards}
   <!-- SUMMARY -->
   <div class="page on" id="page-__s">
     <div class="stats" id="statsRow"></div>
-    <div class="stitle">⚠ 미완료(체크) 항목</div>
+    <div class="stitle" id="sumTitle">📋 전체 항목</div>
+    <!-- 상태 필터 -->
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px" id="sumStatusBar">
+      <button class="dfb on" onclick="setSumStatus('',this)">전체</button>
+      <button class="dfb" onclick="setSumStatus('체크',this)">⚠ 체크</button>
+      <button class="dfb" onclick="setSumStatus('진행중',this)">🔄 진행중</button>
+      <button class="dfb" onclick="setSumStatus('대기',this)">⏸ 대기</button>
+      <button class="dfb" onclick="setSumStatus('완료',this)">✅ 완료</button>
+    </div>
     <div class="dfbar" id="dfbar-__s">
       <span class="dfbar-lbl">📅 기간</span>
       <div class="df-preset">
@@ -262,9 +240,10 @@ tr.hl td{animation:hl 2.5s ease-out forwards}
     <div class="toolbar">
       <div class="srch"><input id="sumSrch" placeholder="내용·요청자·프로젝트 검색..." oninput="renderSum()"></div>
       <select class="fsel" id="sumPF" onchange="renderSum()"><option value="">전체 프로젝트</option></select>
+      <select class="fsel" id="sumKind" onchange="renderSum()"><option value="">전체 종류</option><option>메일</option><option>전화</option><option>미팅</option><option>팀즈</option><option>온라인</option></select>
     </div>
     <div class="twrap"><table>
-      <thead><tr><th>프로젝트</th><th>일자</th><th>종류</th><th>요청자</th><th>담당자</th><th>내용</th><th>다음 액션</th><th>지연</th><th>첨부</th></tr></thead>
+      <thead><tr><th>프로젝트</th><th>일자</th><th>상태</th><th>종류</th><th>요청자</th><th>담당자</th><th>내용</th><th>다음 액션</th><th>지연</th><th>첨부</th></tr></thead>
       <tbody id="sumBody"></tbody>
     </table></div>
   </div>
@@ -760,44 +739,86 @@ function thumbsH(atts,max=4){
   return`<div class="trw">${items}${more}</div>`;
 }
 
+// 요약 페이지 현재 상태 필터 ('' = 완료 제외 전체, 또는 특정 상태)
+let sumStatus='';
+
+function setSumStatus(val, btn){
+  sumStatus=val;
+  document.querySelectorAll('#sumStatusBar .dfb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  // 제목 업데이트
+  const titles={'':'📋 전체 항목','체크':'⚠ 체크 항목','진행중':'🔄 진행중 항목','대기':'⏸ 대기 항목','완료':'✅ 완료 항목'};
+  document.getElementById('sumTitle').textContent=titles[val]||'📋 전체 항목';
+  renderSum();
+}
+
 function renderSum(){
   initDF('__s');const range=getRange('__s');
   const q=(document.getElementById('sumSrch').value||'').toLowerCase();
   const pf=document.getElementById('sumPF').value;
-  let allChk=[];
-  visibleProjs().forEach(p=>DB[p].filter(r=>r.check==='체크').forEach(r=>allChk.push({...r,_p:p})));
-  let rows=allChk.filter(r=>inRange(r.date,range));
-  if(pf)rows=rows.filter(r=>r._p===pf);
-  if(q)rows=rows.filter(r=>[r.content,r.requester,r.assignee,r._p,r.next].join(' ').toLowerCase().includes(q));
-  rows.sort((a,b)=>ddays(b.date)-ddays(a.date));
-  updDFRes('__s',rows.length,allChk.length);
-  const tb=document.getElementById('sumBody');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-ic">✅</div><p>해당 기간에 미완료 항목이 없습니다</p></div></td></tr>`;
+  const kf=(document.getElementById('sumKind')||{}).value||'';
+
+  // 전체 항목 수집 (완료 제외하지 않고 전체)
+  let allRows=[];
+  visibleProjs().forEach(p=>DB[p].forEach(r=>allRows.push({...r,_p:p})));
+
+  // 상태 필터
+  let rows;
+  if(sumStatus===''){
+    // 기본: 완료 제외한 전체 (체크+진행중+대기+기타)
+    rows=allRows.filter(r=>r.check!=='완료');
   }else{
+    rows=allRows.filter(r=>r.check===sumStatus);
+  }
+
+  // 기간 필터
+  rows=rows.filter(r=>inRange(r.date,range));
+  // 프로젝트 필터
+  if(pf)rows=rows.filter(r=>r._p===pf);
+  // 종류 필터
+  if(kf)rows=rows.filter(r=>r.kind===kf);
+  // 검색
+  if(q)rows=rows.filter(r=>[r.content,r.requester,r.assignee,r._p,r.next,r.note].join(' ').toLowerCase().includes(q));
+
+  rows.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  updDFRes('__s',rows.length,allRows.length);
+
+  const tb=document.getElementById('sumBody');
+  if(!rows.length){
+    const msg=sumStatus==='완료'?'완료 항목이 없습니다':sumStatus?`${sumStatus} 항목이 없습니다`:'미완료 항목이 없습니다 ✅';
+    tb.innerHTML=`<tr><td colspan="10"><div class="empty"><div class="empty-ic">${sumStatus==='완료'?'✅':'📋'}</div><p>${msg}</p></div></td></tr>`;
+  }else{
+    const sc=r=>r.check==='체크'?'cc cc-chk':r.check==='완료'?'cc cc-done':'cc cc-etc';
     tb.innerHTML=rows.map(r=>{
-      const d=ddays(r.date);
-      return`<tr class="chk" onclick="goToRow('${r._p}','${r.id}')">
+      const d=r.check==='체크'?ddays(r.date):0;
+      return`<tr class="${r.check==='체크'?'chk':''}" onclick="goToRow('${r._p}','${r.id}')">
         <td><span style="color:var(--acc);font-weight:700">${esc(r._p)}</span></td>
         <td style="white-space:nowrap">${r.date}</td>
+        <td><span class="${sc(r)}">${r.check}</span></td>
         <td><span class="cc-kind">${r.kind}</span></td>
         <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(r.requester)}">${esc(r.requester)}</td>
         <td style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(r.assignee)}">${esc(r.assignee)}</td>
-        <td style="max-width:210px" title="${esc(r.content)}">${esc(r.content.slice(0,80))}${r.content.length>80?'…':''}</td>
-        <td style="max-width:140px;color:var(--tx2)">${r.next?esc(r.next.slice(0,50))+(r.next.length>50?'…':''):'-'}</td>
-        <td>${delayH(d)}</td>
+        <td style="max-width:200px" title="${esc(r.content)}">${esc(r.content.slice(0,80))}${r.content.length>80?'…':''}</td>
+        <td style="max-width:130px;color:var(--tx2)">${r.next?esc(r.next.slice(0,50))+(r.next.length>50?'…':''):'-'}</td>
+        <td>${r.check==='체크'?delayH(d):''}</td>
         <td onclick="event.stopPropagation()">${thumbsH(r.atts)}${r.ref&&r.ref.startsWith('http')?`<a class="rlink" href="${r.ref}" target="_blank">🔗</a>`:''}</td>
       </tr>`;
     }).join('');
   }
-  const allRows=Object.values(DB).flat();
-  const chk=allRows.filter(r=>r.check==='체크').length;
-  const mxD=rows.reduce((m,r)=>Math.max(m,ddays(r.date)),0);
-  const o7=rows.filter(r=>ddays(r.date)>=7).length;
+
+  // 통계 카드
+  const total=allRows.length;
+  const chkCnt=allRows.filter(r=>r.check==='체크').length;
+  const doneCnt=allRows.filter(r=>r.check==='완료').length;
+  const ingCnt=allRows.filter(r=>r.check==='진행중').length;
+  const waitCnt=allRows.filter(r=>r.check==='대기').length;
+  const mxD=allRows.filter(r=>r.check==='체크').reduce((m,r)=>Math.max(m,ddays(r.date)),0);
   document.getElementById('statsRow').innerHTML=`
-    <div class="sc ${chk>0?'rd':''}"><div class="sc-lbl">미완료</div><div class="sc-val ${chk>0?'rd':''}">${chk}</div><div class="sc-sub">전체 ${allRows.length}건</div></div>
-    <div class="sc"><div class="sc-lbl">프로젝트</div><div class="sc-val">${projs().length}</div><div class="sc-sub">보임 ${visibleProjs().length}개</div></div>
-    <div class="sc ${mxD>=7?'rd':''}"><div class="sc-lbl">최대 지연</div><div class="sc-val ${mxD>=7?'rd':''}">${mxD}일</div><div class="sc-sub">체크 항목 기준</div></div>
-    <div class="sc ${o7>0?'rd':''}"><div class="sc-lbl">7일+ 지연</div><div class="sc-val ${o7>0?'rd':''}">${o7}</div><div class="sc-sub">즉시 조치 필요</div></div>`;
+    <div class="sc ${chkCnt>0?'rd':''}"><div class="sc-lbl">⚠ 체크</div><div class="sc-val ${chkCnt>0?'rd':''}">${chkCnt}</div><div class="sc-sub">즉시 처리 필요</div></div>
+    <div class="sc"><div class="sc-lbl">🔄 진행중</div><div class="sc-val">${ingCnt}</div><div class="sc-sub">처리 중</div></div>
+    <div class="sc"><div class="sc-lbl">⏸ 대기</div><div class="sc-val">${waitCnt}</div><div class="sc-sub">대기 중</div></div>
+    <div class="sc"><div class="sc-lbl">✅ 완료</div><div class="sc-val">${doneCnt}</div><div class="sc-sub">전체 ${total}건</div></div>
+    <div class="sc ${mxD>=7?'rd':''}"><div class="sc-lbl">최대 지연</div><div class="sc-val ${mxD>=7?'rd':''}">${mxD}일</div><div class="sc-sub">체크 항목 기준</div></div>`;
 }
 
 function renderProj(p){
